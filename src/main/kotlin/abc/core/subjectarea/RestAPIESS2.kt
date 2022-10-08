@@ -10,18 +10,6 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 class RestAPIESS2 (var ip: String = "127.0.0.1", var port: Int = 4567){
-    suspend fun getEnvValues(SessionToken:String) : R<ESS2EnvValuesList> {
-        val headers = Headers()
-        headers.append("SessionToken",SessionToken)
-        val res = window
-        .fetch("http://"+ip+":"+port+"/api/ess2/envvalues/get",RequestInit("get",headers))
-            .await()
-        if (!res.ok)
-            return R(res.statusText+" "+res.text().await(),null)
-        val res2 = res.text().await()
-        val format = Json { ignoreUnknownKeys = true }
-        return R("",format.decodeFromString<ESS2EnvValuesList>(res2))
-    }
     suspend fun getArchitectureState(SessionToken:String) : R<ArrayList<Long>> {
         val headers = Headers()
         headers.append("SessionToken",SessionToken)
@@ -33,6 +21,18 @@ class RestAPIESS2 (var ip: String = "127.0.0.1", var port: Int = 4567){
         val res2 = res.text().await()
         val format = Json { ignoreUnknownKeys = true }
         return R("",format.decodeFromString<ArrayList<Long>>(res2))
+    }
+    suspend fun getEnvValues(SessionToken:String) : R<ESS2EnvValuesList> {
+        val headers = Headers()
+        headers.append("SessionToken",SessionToken)
+        val res = window
+        .fetch("http://"+ip+":"+port+"/api/ess2/envvalues/get",RequestInit("get",headers))
+            .await()
+        if (!res.ok)
+            return R(res.statusText+" "+res.text().await(),null)
+        val res2 = res.text().await()
+        val format = Json { ignoreUnknownKeys = true }
+        return R("",format.decodeFromString<ESS2EnvValuesList>(res2))
     }
     suspend fun keepalive(onoff:Boolean) : R<JEmpty> {
         val res = window
@@ -56,17 +56,17 @@ class RestAPIESS2 (var ip: String = "127.0.0.1", var port: Int = 4567){
         val format = Json { ignoreUnknownKeys = true }
         return R("",format.decodeFromString<Account>(res2))
     }
-    suspend fun getStreamPeriod(SessionToken:String,nodeid:Long,timeInMS1:Long,timeInMS2:Long,level:Int) : R<EntityList<ArchStreamPeriod>> {
+    suspend fun metaDataTest(SessionToken:String,pass:String,id:Long) : R<JString> {
         val headers = Headers()
         headers.append("SessionToken",SessionToken)
         val res = window
-        .fetch("http://"+ip+":"+port+"/api/ess/streamperiod/list?nodeid="+nodeid+"&timeInMS1="+timeInMS1+"&timeInMS2="+timeInMS2+"&level="+level+"",RequestInit("get",headers))
+        .fetch("http://"+ip+":"+port+"/api/ess2/meta/test?pass="+pass+"&id="+id+"",RequestInit("get",headers))
             .await()
         if (!res.ok)
             return R(res.statusText+" "+res.text().await(),null)
         val res2 = res.text().await()
         val format = Json { ignoreUnknownKeys = true }
-        return R("",format.decodeFromString<EntityList<ArchStreamPeriod>>(res2))
+        return R("",format.decodeFromString<JString>(res2))
     }
     suspend fun metaDataDeploy(SessionToken:String,pass:String,id:Long) : R<CallResult> {
         val headers = Headers()
@@ -80,42 +80,6 @@ class RestAPIESS2 (var ip: String = "127.0.0.1", var port: Int = 4567){
         val format = Json { ignoreUnknownKeys = true }
         return R("",format.decodeFromString<CallResult>(res2))
     }
-    suspend fun reloadMetaData(SessionToken:String) : R<JEmpty> {
-        val headers = Headers()
-        headers.append("SessionToken",SessionToken)
-        val res = window
-        .fetch("http://"+ip+":"+port+"/api/ess/meta/reload",RequestInit("post",headers))
-            .await()
-        if (!res.ok)
-            return R(res.statusText+" "+res.text().await(),null)
-        val res2 = res.text().await()
-        val format = Json { ignoreUnknownKeys = true }
-        return R("",format.decodeFromString<JEmpty>(res2))
-    }
-    suspend fun setConfig(SessionToken:String,id:Long) : R<JEmpty> {
-        val headers = Headers()
-        headers.append("SessionToken",SessionToken)
-        val res = window
-        .fetch("http://"+ip+":"+port+"/api/ess/config/set?id="+id+"",RequestInit("post",headers))
-            .await()
-        if (!res.ok)
-            return R(res.statusText+" "+res.text().await(),null)
-        val res2 = res.text().await()
-        val format = Json { ignoreUnknownKeys = true }
-        return R("",format.decodeFromString<JEmpty>(res2))
-    }
-    suspend fun importMetaData(SessionToken:String,pass:String,id:Long) : R<ArrayList<OidString>> {
-        val headers = Headers()
-        headers.append("SessionToken",SessionToken)
-        val res = window
-        .fetch("http://"+ip+":"+port+"/api/ess2/meta/import?pass="+pass+"&id="+id+"",RequestInit("post",headers))
-            .await()
-        if (!res.ok)
-            return R(res.statusText+" "+res.text().await(),null)
-        val res2 = res.text().await()
-        val format = Json { ignoreUnknownKeys = true }
-        return R("",format.decodeFromString<ArrayList<OidString>>(res2))
-    }
     suspend fun importMetaData2(SessionToken:String,pass:String,id:Long) : R<ArrayList<OidString>> {
         val headers = Headers()
         headers.append("SessionToken",SessionToken)
@@ -127,6 +91,30 @@ class RestAPIESS2 (var ip: String = "127.0.0.1", var port: Int = 4567){
         val res2 = res.text().await()
         val format = Json { ignoreUnknownKeys = true }
         return R("",format.decodeFromString<ArrayList<OidString>>(res2))
+    }
+    suspend fun metaDataCancel(SessionToken:String,pass:String) : R<CallResult> {
+        val headers = Headers()
+        headers.append("SessionToken",SessionToken)
+        val res = window
+        .fetch("http://"+ip+":"+port+"/api/ess2/meta/cancel?pass="+pass+"",RequestInit("get",headers))
+            .await()
+        if (!res.ok)
+            return R(res.statusText+" "+res.text().await(),null)
+        val res2 = res.text().await()
+        val format = Json { ignoreUnknownKeys = true }
+        return R("",format.decodeFromString<CallResult>(res2))
+    }
+    suspend fun execScript(SessionToken:String,id:Long,trace:Boolean) : R<JString> {
+        val headers = Headers()
+        headers.append("SessionToken",SessionToken)
+        val res = window
+        .fetch("http://"+ip+":"+port+"/api/ess2/script/exec?id="+id+"&trace="+trace+"",RequestInit("post",headers))
+            .await()
+        if (!res.ok)
+            return R(res.statusText+" "+res.text().await(),null)
+        val res2 = res.text().await()
+        val format = Json { ignoreUnknownKeys = true }
+        return R("",format.decodeFromString<JString>(res2))
     }
     suspend fun quitFailure(SessionToken:String,setting:Boolean,equipName:String,logUnit:Int,regnum:Int,bitnum:Int) : R<JEmpty> {
         val headers = Headers()
@@ -152,17 +140,25 @@ class RestAPIESS2 (var ip: String = "127.0.0.1", var port: Int = 4567){
         val format = Json { ignoreUnknownKeys = true }
         return R("",format.decodeFromString<ArrayList<StreamDataValue>>(res2))
     }
-    suspend fun getEnvValuesNode(SessionToken:String,nodeid:Long) : R<ESS2EnvValuesList> {
-        val headers = Headers()
-        headers.append("SessionToken",SessionToken)
+    suspend fun clockCycle() : R<JEmpty> {
         val res = window
-        .fetch("http://"+ip+":"+port+"/api/ess2/node/envvalues/get?nodeid="+nodeid+"",RequestInit("get",headers))
+        .fetch("http://"+ip+":"+port+"/api/ess2/clock",RequestInit("get"))
             .await()
         if (!res.ok)
             return R(res.statusText+" "+res.text().await(),null)
         val res2 = res.text().await()
         val format = Json { ignoreUnknownKeys = true }
-        return R("",format.decodeFromString<ESS2EnvValuesList>(res2))
+        return R("",format.decodeFromString<JEmpty>(res2))
+    }
+    suspend fun sendSnapShot() : R<JEmpty> {
+        val res = window
+        .fetch("http://"+ip+":"+port+"/api/ess2/snapshot/send",RequestInit("post"))
+            .await()
+        if (!res.ok)
+            return R(res.statusText+" "+res.text().await(),null)
+        val res2 = res.text().await()
+        val format = Json { ignoreUnknownKeys = true }
+        return R("",format.decodeFromString<JEmpty>(res2))
     }
     suspend fun sendStreamData() : R<JEmpty> {
         val res = window
@@ -174,41 +170,17 @@ class RestAPIESS2 (var ip: String = "127.0.0.1", var port: Int = 4567){
         val format = Json { ignoreUnknownKeys = true }
         return R("",format.decodeFromString<JEmpty>(res2))
     }
-    suspend fun getConfigList(SessionToken:String) : R<ArrayList<PLMConfig>> {
+    suspend fun reloadMetaData(SessionToken:String) : R<JEmpty> {
         val headers = Headers()
         headers.append("SessionToken",SessionToken)
         val res = window
-        .fetch("http://"+ip+":"+port+"/api/ess/config/list",RequestInit("get",headers))
+        .fetch("http://"+ip+":"+port+"/api/ess/meta/reload",RequestInit("post",headers))
             .await()
         if (!res.ok)
             return R(res.statusText+" "+res.text().await(),null)
         val res2 = res.text().await()
         val format = Json { ignoreUnknownKeys = true }
-        return R("",format.decodeFromString<ArrayList<PLMConfig>>(res2))
-    }
-    suspend fun metaDataCancel(SessionToken:String,pass:String) : R<CallResult> {
-        val headers = Headers()
-        headers.append("SessionToken",SessionToken)
-        val res = window
-        .fetch("http://"+ip+":"+port+"/api/ess2/meta/cancel?pass="+pass+"",RequestInit("get",headers))
-            .await()
-        if (!res.ok)
-            return R(res.statusText+" "+res.text().await(),null)
-        val res2 = res.text().await()
-        val format = Json { ignoreUnknownKeys = true }
-        return R("",format.decodeFromString<CallResult>(res2))
-    }
-    suspend fun execScript(SessionToken:String,id:Long,trace:Boolean) : R<JString> {
-        val headers = Headers()
-        headers.append("SessionToken",SessionToken)
-        val res = window
-        .fetch("http://"+ip+":"+port+"/api/ess2/script/exec?id="+id+"&trace="+trace+"",RequestInit("post",headers))
-            .await()
-        if (!res.ok)
-            return R(res.statusText+" "+res.text().await(),null)
-        val res2 = res.text().await()
-        val format = Json { ignoreUnknownKeys = true }
-        return R("",format.decodeFromString<JString>(res2))
+        return R("",format.decodeFromString<JEmpty>(res2))
     }
     suspend fun sendEnvValues() : R<JEmpty> {
         val res = window
@@ -244,69 +216,23 @@ class RestAPIESS2 (var ip: String = "127.0.0.1", var port: Int = 4567){
         val format = Json { ignoreUnknownKeys = true }
         return R("",format.decodeFromString<JLong>(res2))
     }
-    suspend fun sendSnapShot() : R<JEmpty> {
-        val res = window
-        .fetch("http://"+ip+":"+port+"/api/ess2/snapshot/send",RequestInit("post"))
-            .await()
-        if (!res.ok)
-            return R(res.statusText+" "+res.text().await(),null)
-        val res2 = res.text().await()
-        val format = Json { ignoreUnknownKeys = true }
-        return R("",format.decodeFromString<JEmpty>(res2))
-    }
-    suspend fun metaDataTest(SessionToken:String,pass:String,id:Long) : R<JString> {
-        val headers = Headers()
-        headers.append("SessionToken",SessionToken)
-        val res = window
-        .fetch("http://"+ip+":"+port+"/api/ess2/meta/test?pass="+pass+"&id="+id+"",RequestInit("get",headers))
-            .await()
-        if (!res.ok)
-            return R(res.statusText+" "+res.text().await(),null)
-        val res2 = res.text().await()
-        val format = Json { ignoreUnknownKeys = true }
-        return R("",format.decodeFromString<JString>(res2))
-    }
-    suspend fun loadMetaData(SessionToken:String,pass:String,id:Long) : R<OidString> {
-        val headers = Headers()
-        headers.append("SessionToken",SessionToken)
-        val res = window
-        .fetch("http://"+ip+":"+port+"/api/ess2/meta/load?pass="+pass+"&id="+id+"",RequestInit("post",headers))
-            .await()
-        if (!res.ok)
-            return R(res.statusText+" "+res.text().await(),null)
-        val res2 = res.text().await()
-        val format = Json { ignoreUnknownKeys = true }
-        return R("",format.decodeFromString<OidString>(res2))
-    }
-    suspend fun quitAllFailures(SessionToken:String) : R<JEmpty> {
-        val headers = Headers()
-        headers.append("SessionToken",SessionToken)
-        val res = window
-        .fetch("http://"+ip+":"+port+"/api/ess2/failure/quit/all",RequestInit("post",headers))
-            .await()
-        if (!res.ok)
-            return R(res.statusText+" "+res.text().await(),null)
-        val res2 = res.text().await()
-        val format = Json { ignoreUnknownKeys = true }
-        return R("",format.decodeFromString<JEmpty>(res2))
-    }
-    suspend fun isPLMReady(SessionToken:String) : R<JBoolean> {
-        val headers = Headers()
-        headers.append("SessionToken",SessionToken)
-        val res = window
-        .fetch("http://"+ip+":"+port+"/api/ess/plm/ready",RequestInit("get",headers))
-            .await()
-        if (!res.ok)
-            return R(res.statusText+" "+res.text().await(),null)
-        val res2 = res.text().await()
-        val format = Json { ignoreUnknownKeys = true }
-        return R("",format.decodeFromString<JBoolean>(res2))
-    }
     suspend fun removeConfig(SessionToken:String,id:Long) : R<JEmpty> {
         val headers = Headers()
         headers.append("SessionToken",SessionToken)
         val res = window
         .fetch("http://"+ip+":"+port+"/api/ess/config/remove?id="+id+"",RequestInit("post",headers))
+            .await()
+        if (!res.ok)
+            return R(res.statusText+" "+res.text().await(),null)
+        val res2 = res.text().await()
+        val format = Json { ignoreUnknownKeys = true }
+        return R("",format.decodeFromString<JEmpty>(res2))
+    }
+    suspend fun setConfig(SessionToken:String,id:Long) : R<JEmpty> {
+        val headers = Headers()
+        headers.append("SessionToken",SessionToken)
+        val res = window
+        .fetch("http://"+ip+":"+port+"/api/ess/config/set?id="+id+"",RequestInit("post",headers))
             .await()
         if (!res.ok)
             return R(res.statusText+" "+res.text().await(),null)
@@ -326,9 +252,11 @@ class RestAPIESS2 (var ip: String = "127.0.0.1", var port: Int = 4567){
         val format = Json { ignoreUnknownKeys = true }
         return R("",format.decodeFromString<EntityList<ArchStreamDataSet>>(res2))
     }
-    suspend fun clockCycle() : R<JEmpty> {
+    suspend fun quitAllFailures(SessionToken:String) : R<JEmpty> {
+        val headers = Headers()
+        headers.append("SessionToken",SessionToken)
         val res = window
-        .fetch("http://"+ip+":"+port+"/api/ess2/clock",RequestInit("get"))
+        .fetch("http://"+ip+":"+port+"/api/ess2/failure/quit/all",RequestInit("post",headers))
             .await()
         if (!res.ok)
             return R(res.statusText+" "+res.text().await(),null)
@@ -336,59 +264,83 @@ class RestAPIESS2 (var ip: String = "127.0.0.1", var port: Int = 4567){
         val format = Json { ignoreUnknownKeys = true }
         return R("",format.decodeFromString<JEmpty>(res2))
     }
-    suspend fun readESS2RegisterValue(SessionToken:String,deviceName:String,unit:Int,regnum:Int) : R<JInt> {
+    suspend fun importMetaData(SessionToken:String,pass:String,id:Long) : R<ArrayList<OidString>> {
         val headers = Headers()
         headers.append("SessionToken",SessionToken)
         val res = window
-        .fetch("http://"+ip+":"+port+"/api/ess2/register/value/read?deviceName="+deviceName+"&unit="+unit+"&regnum="+regnum+"",RequestInit("get",headers))
+        .fetch("http://"+ip+":"+port+"/api/ess2/meta/import?pass="+pass+"&id="+id+"",RequestInit("post",headers))
             .await()
         if (!res.ok)
             return R(res.statusText+" "+res.text().await(),null)
         val res2 = res.text().await()
         val format = Json { ignoreUnknownKeys = true }
-        return R("",format.decodeFromString<JInt>(res2))
+        return R("",format.decodeFromString<ArrayList<OidString>>(res2))
     }
-    suspend fun writeESS2RegisterValue(SessionToken:String,deviceName:String,unit:Int,regnum:Int,value:Int) : R<JEmpty> {
+    suspend fun loadMetaData(SessionToken:String,pass:String,id:Long) : R<OidString> {
         val headers = Headers()
         headers.append("SessionToken",SessionToken)
         val res = window
-        .fetch("http://"+ip+":"+port+"/api/ess2/register/value/write?deviceName="+deviceName+"&unit="+unit+"&regnum="+regnum+"&value="+value+"",RequestInit("post",headers))
+        .fetch("http://"+ip+":"+port+"/api/ess2/meta/load?pass="+pass+"&id="+id+"",RequestInit("post",headers))
             .await()
         if (!res.ok)
             return R(res.statusText+" "+res.text().await(),null)
         val res2 = res.text().await()
         val format = Json { ignoreUnknownKeys = true }
-        return R("",format.decodeFromString<JEmpty>(res2))
+        return R("",format.decodeFromString<OidString>(res2))
     }
-    suspend fun writeESS2SettingValue(SessionToken:String,deviceName:String,unit:Int,regnum:Int,value:Int) : R<JEmpty> {
+    suspend fun getEnvValuesNode(SessionToken:String,nodeid:Long) : R<ESS2EnvValuesList> {
         val headers = Headers()
         headers.append("SessionToken",SessionToken)
         val res = window
-        .fetch("http://"+ip+":"+port+"/api/ess2/setting/write?deviceName="+deviceName+"&unit="+unit+"&regnum="+regnum+"&value="+value+"",RequestInit("post",headers))
+        .fetch("http://"+ip+":"+port+"/api/ess2/node/envvalues/get?nodeid="+nodeid+"",RequestInit("get",headers))
             .await()
         if (!res.ok)
             return R(res.statusText+" "+res.text().await(),null)
         val res2 = res.text().await()
         val format = Json { ignoreUnknownKeys = true }
-        return R("",format.decodeFromString<JEmpty>(res2))
+        return R("",format.decodeFromString<ESS2EnvValuesList>(res2))
     }
-    suspend fun writeESS2CommandValue(SessionToken:String,deviceName:String,unit:Int,regnum:Int,value:Int) : R<JEmpty> {
+    suspend fun isPLMReady(SessionToken:String) : R<JBoolean> {
         val headers = Headers()
         headers.append("SessionToken",SessionToken)
         val res = window
-        .fetch("http://"+ip+":"+port+"/api/ess/command/write?deviceName="+deviceName+"&unit="+unit+"&regnum="+regnum+"&value="+value+"",RequestInit("post",headers))
+        .fetch("http://"+ip+":"+port+"/api/ess/plm/ready",RequestInit("get",headers))
             .await()
         if (!res.ok)
             return R(res.statusText+" "+res.text().await(),null)
         val res2 = res.text().await()
         val format = Json { ignoreUnknownKeys = true }
-        return R("",format.decodeFromString<JEmpty>(res2))
+        return R("",format.decodeFromString<JBoolean>(res2))
     }
-    suspend fun readESS2RegistersValues(SessionToken:String,deviceName:String) : R<IntegerList> {
+    suspend fun getStreamPeriod(SessionToken:String,nodeid:Long,timeInMS1:Long,timeInMS2:Long,level:Int) : R<EntityList<ArchStreamPeriod>> {
         val headers = Headers()
         headers.append("SessionToken",SessionToken)
         val res = window
-        .fetch("http://"+ip+":"+port+"/api/ess2/registers/list/read?deviceName="+deviceName+"",RequestInit("post",headers))
+        .fetch("http://"+ip+":"+port+"/api/ess/streamperiod/list?nodeid="+nodeid+"&timeInMS1="+timeInMS1+"&timeInMS2="+timeInMS2+"&level="+level+"",RequestInit("get",headers))
+            .await()
+        if (!res.ok)
+            return R(res.statusText+" "+res.text().await(),null)
+        val res2 = res.text().await()
+        val format = Json { ignoreUnknownKeys = true }
+        return R("",format.decodeFromString<EntityList<ArchStreamPeriod>>(res2))
+    }
+    suspend fun getConfigList(SessionToken:String) : R<ArrayList<PLMConfig>> {
+        val headers = Headers()
+        headers.append("SessionToken",SessionToken)
+        val res = window
+        .fetch("http://"+ip+":"+port+"/api/ess/config/list",RequestInit("get",headers))
+            .await()
+        if (!res.ok)
+            return R(res.statusText+" "+res.text().await(),null)
+        val res2 = res.text().await()
+        val format = Json { ignoreUnknownKeys = true }
+        return R("",format.decodeFromString<ArrayList<PLMConfig>>(res2))
+    }
+    suspend fun readESS2SnapShotValues(SessionToken:String,deviceName:String) : R<IntegerList> {
+        val headers = Headers()
+        headers.append("SessionToken",SessionToken)
+        val res = window
+        .fetch("http://"+ip+":"+port+"/api/ess2/snapshot/list/read?deviceName="+deviceName+"",RequestInit("post",headers))
             .await()
         if (!res.ok)
             return R(res.statusText+" "+res.text().await(),null)
@@ -408,6 +360,78 @@ class RestAPIESS2 (var ip: String = "127.0.0.1", var port: Int = 4567){
         val format = Json { ignoreUnknownKeys = true }
         return R("",format.decodeFromString<CallResult>(res2))
     }
+    suspend fun readESS2RegistersValues(SessionToken:String,deviceName:String) : R<IntegerList> {
+        val headers = Headers()
+        headers.append("SessionToken",SessionToken)
+        val res = window
+        .fetch("http://"+ip+":"+port+"/api/ess2/registers/list/read?deviceName="+deviceName+"",RequestInit("post",headers))
+            .await()
+        if (!res.ok)
+            return R(res.statusText+" "+res.text().await(),null)
+        val res2 = res.text().await()
+        val format = Json { ignoreUnknownKeys = true }
+        return R("",format.decodeFromString<IntegerList>(res2))
+    }
+    suspend fun readESS2RegisterValue(SessionToken:String,deviceName:String,unit:Int,regnum:Int) : R<JInt> {
+        val headers = Headers()
+        headers.append("SessionToken",SessionToken)
+        val res = window
+        .fetch("http://"+ip+":"+port+"/api/ess2/register/value/read?deviceName="+deviceName+"&unit="+unit+"&regnum="+regnum+"",RequestInit("get",headers))
+            .await()
+        if (!res.ok)
+            return R(res.statusText+" "+res.text().await(),null)
+        val res2 = res.text().await()
+        val format = Json { ignoreUnknownKeys = true }
+        return R("",format.decodeFromString<JInt>(res2))
+    }
+    suspend fun readESS2NodeSnapShotValues(SessionToken:String,nodeid:Long,deviceName:String) : R<IntegerList> {
+        val headers = Headers()
+        headers.append("SessionToken",SessionToken)
+        val res = window
+        .fetch("http://"+ip+":"+port+"/api/ess2/node/snapshot/list/read?nodeid="+nodeid+"&deviceName="+deviceName+"",RequestInit("post",headers))
+            .await()
+        if (!res.ok)
+            return R(res.statusText+" "+res.text().await(),null)
+        val res2 = res.text().await()
+        val format = Json { ignoreUnknownKeys = true }
+        return R("",format.decodeFromString<IntegerList>(res2))
+    }
+    suspend fun readRegistersValues0(SessionToken:String) : R<IntegerList> {
+        val headers = Headers()
+        headers.append("SessionToken",SessionToken)
+        val res = window
+        .fetch("http://"+ip+":"+port+"/api/ess/registers/values/read",RequestInit("get",headers))
+            .await()
+        if (!res.ok)
+            return R(res.statusText+" "+res.text().await(),null)
+        val res2 = res.text().await()
+        val format = Json { ignoreUnknownKeys = true }
+        return R("",format.decodeFromString<IntegerList>(res2))
+    }
+    suspend fun disconnectFromPLM(SessionToken:String) : R<JEmpty> {
+        val headers = Headers()
+        headers.append("SessionToken",SessionToken)
+        val res = window
+        .fetch("http://"+ip+":"+port+"/api/ess/plm/disconnect",RequestInit("post",headers))
+            .await()
+        if (!res.ok)
+            return R(res.statusText+" "+res.text().await(),null)
+        val res2 = res.text().await()
+        val format = Json { ignoreUnknownKeys = true }
+        return R("",format.decodeFromString<JEmpty>(res2))
+    }
+    suspend fun readRegisterValue(SessionToken:String,regnum:Int) : R<JInt> {
+        val headers = Headers()
+        headers.append("SessionToken",SessionToken)
+        val res = window
+        .fetch("http://"+ip+":"+port+"/api/ess/register/value/read?regnum="+regnum+"",RequestInit("get",headers))
+            .await()
+        if (!res.ok)
+            return R(res.statusText+" "+res.text().await(),null)
+        val res2 = res.text().await()
+        val format = Json { ignoreUnknownKeys = true }
+        return R("",format.decodeFromString<JInt>(res2))
+    }
     suspend fun disconnectFromEquipment(SessionToken:String) : R<CallResult> {
         val headers = Headers()
         headers.append("SessionToken",SessionToken)
@@ -420,23 +444,11 @@ class RestAPIESS2 (var ip: String = "127.0.0.1", var port: Int = 4567){
         val format = Json { ignoreUnknownKeys = true }
         return R("",format.decodeFromString<CallResult>(res2))
     }
-    suspend fun writeCommandValue(SessionToken:String,regnum:Int,value:Int) : R<JEmpty> {
+    suspend fun writeRegisterValue(SessionToken:String,regnum:Int,value:Int) : R<JEmpty> {
         val headers = Headers()
         headers.append("SessionToken",SessionToken)
         val res = window
-        .fetch("http://"+ip+":"+port+"/api/ess/command/write?regnum="+regnum+"&value="+value+"",RequestInit("post",headers))
-            .await()
-        if (!res.ok)
-            return R(res.statusText+" "+res.text().await(),null)
-        val res2 = res.text().await()
-        val format = Json { ignoreUnknownKeys = true }
-        return R("",format.decodeFromString<JEmpty>(res2))
-    }
-    suspend fun disconnectFromPLM(SessionToken:String) : R<JEmpty> {
-        val headers = Headers()
-        headers.append("SessionToken",SessionToken)
-        val res = window
-        .fetch("http://"+ip+":"+port+"/api/ess/plm/disconnect",RequestInit("post",headers))
+        .fetch("http://"+ip+":"+port+"/api/ess/register/value/write?regnum="+regnum+"&value="+value+"",RequestInit("post",headers))
             .await()
         if (!res.ok)
             return R(res.statusText+" "+res.text().await(),null)
@@ -456,11 +468,47 @@ class RestAPIESS2 (var ip: String = "127.0.0.1", var port: Int = 4567){
         val format = Json { ignoreUnknownKeys = true }
         return R("",format.decodeFromString<IntegerList>(res2))
     }
-    suspend fun writeRegisterValue(SessionToken:String,regnum:Int,value:Int) : R<JEmpty> {
+    suspend fun writeESS2SettingValue(SessionToken:String,deviceName:String,unit:Int,regnum:Int,value:Int) : R<JEmpty> {
         val headers = Headers()
         headers.append("SessionToken",SessionToken)
         val res = window
-        .fetch("http://"+ip+":"+port+"/api/ess/register/value/write?regnum="+regnum+"&value="+value+"",RequestInit("post",headers))
+        .fetch("http://"+ip+":"+port+"/api/ess2/setting/write?deviceName="+deviceName+"&unit="+unit+"&regnum="+regnum+"&value="+value+"",RequestInit("post",headers))
+            .await()
+        if (!res.ok)
+            return R(res.statusText+" "+res.text().await(),null)
+        val res2 = res.text().await()
+        val format = Json { ignoreUnknownKeys = true }
+        return R("",format.decodeFromString<JEmpty>(res2))
+    }
+    suspend fun importMetaDataXls(SessionToken:String,pass:String,id:Long) : R<JString> {
+        val headers = Headers()
+        headers.append("SessionToken",SessionToken)
+        val res = window
+        .fetch("http://"+ip+":"+port+"/api/ess/meta/import?pass="+pass+"&id="+id+"",RequestInit("post",headers))
+            .await()
+        if (!res.ok)
+            return R(res.statusText+" "+res.text().await(),null)
+        val res2 = res.text().await()
+        val format = Json { ignoreUnknownKeys = true }
+        return R("",format.decodeFromString<JString>(res2))
+    }
+    suspend fun writeESS2RegisterValue(SessionToken:String,deviceName:String,unit:Int,regnum:Int,value:Int) : R<JEmpty> {
+        val headers = Headers()
+        headers.append("SessionToken",SessionToken)
+        val res = window
+        .fetch("http://"+ip+":"+port+"/api/ess2/register/value/write?deviceName="+deviceName+"&unit="+unit+"&regnum="+regnum+"&value="+value+"",RequestInit("post",headers))
+            .await()
+        if (!res.ok)
+            return R(res.statusText+" "+res.text().await(),null)
+        val res2 = res.text().await()
+        val format = Json { ignoreUnknownKeys = true }
+        return R("",format.decodeFromString<JEmpty>(res2))
+    }
+    suspend fun writeESS2CommandValue(SessionToken:String,deviceName:String,unit:Int,regnum:Int,value:Int) : R<JEmpty> {
+        val headers = Headers()
+        headers.append("SessionToken",SessionToken)
+        val res = window
+        .fetch("http://"+ip+":"+port+"/api/ess/command/write?deviceName="+deviceName+"&unit="+unit+"&regnum="+regnum+"&value="+value+"",RequestInit("post",headers))
             .await()
         if (!res.ok)
             return R(res.statusText+" "+res.text().await(),null)
@@ -480,29 +528,17 @@ class RestAPIESS2 (var ip: String = "127.0.0.1", var port: Int = 4567){
         val format = Json { ignoreUnknownKeys = true }
         return R("",format.decodeFromString<JEmpty>(res2))
     }
-    suspend fun readRegistersValues0(SessionToken:String) : R<IntegerList> {
+    suspend fun getNewStreamPeriod(SessionToken:String,lastid:Long) : R<EntityList<ArchStreamPeriod>> {
         val headers = Headers()
         headers.append("SessionToken",SessionToken)
         val res = window
-        .fetch("http://"+ip+":"+port+"/api/ess/registers/values/read",RequestInit("get",headers))
+        .fetch("http://"+ip+":"+port+"/api/ess/streamperiod/new/list?lastid="+lastid+"",RequestInit("get",headers))
             .await()
         if (!res.ok)
             return R(res.statusText+" "+res.text().await(),null)
         val res2 = res.text().await()
         val format = Json { ignoreUnknownKeys = true }
-        return R("",format.decodeFromString<IntegerList>(res2))
-    }
-    suspend fun writeSettingValue(SessionToken:String,regnum:Int,value:Int) : R<JEmpty> {
-        val headers = Headers()
-        headers.append("SessionToken",SessionToken)
-        val res = window
-        .fetch("http://"+ip+":"+port+"/api/ess/setting/write?regnum="+regnum+"&value="+value+"",RequestInit("post",headers))
-            .await()
-        if (!res.ok)
-            return R(res.statusText+" "+res.text().await(),null)
-        val res2 = res.text().await()
-        val format = Json { ignoreUnknownKeys = true }
-        return R("",format.decodeFromString<JEmpty>(res2))
+        return R("",format.decodeFromString<EntityList<ArchStreamPeriod>>(res2))
     }
     suspend fun getCurrentMetaData(SessionToken:String) : R<MetaExternalSystem> {
         val headers = Headers()
@@ -516,64 +552,28 @@ class RestAPIESS2 (var ip: String = "127.0.0.1", var port: Int = 4567){
         val format = Json { ignoreUnknownKeys = true }
         return R("",format.decodeFromString<MetaExternalSystem>(res2))
     }
-    suspend fun readESS2SnapShotValues(SessionToken:String,deviceName:String) : R<IntegerList> {
+    suspend fun writeSettingValue(SessionToken:String,regnum:Int,value:Int) : R<JEmpty> {
         val headers = Headers()
         headers.append("SessionToken",SessionToken)
         val res = window
-        .fetch("http://"+ip+":"+port+"/api/ess2/snapshot/list/read?deviceName="+deviceName+"",RequestInit("post",headers))
+        .fetch("http://"+ip+":"+port+"/api/ess/setting/write?regnum="+regnum+"&value="+value+"",RequestInit("post",headers))
             .await()
         if (!res.ok)
             return R(res.statusText+" "+res.text().await(),null)
         val res2 = res.text().await()
         val format = Json { ignoreUnknownKeys = true }
-        return R("",format.decodeFromString<IntegerList>(res2))
+        return R("",format.decodeFromString<JEmpty>(res2))
     }
-    suspend fun importMetaDataXls(SessionToken:String,pass:String,id:Long) : R<JString> {
+    suspend fun writeCommandValue(SessionToken:String,regnum:Int,value:Int) : R<JEmpty> {
         val headers = Headers()
         headers.append("SessionToken",SessionToken)
         val res = window
-        .fetch("http://"+ip+":"+port+"/api/ess/meta/import?pass="+pass+"&id="+id+"",RequestInit("post",headers))
+        .fetch("http://"+ip+":"+port+"/api/ess/command/write?regnum="+regnum+"&value="+value+"",RequestInit("post",headers))
             .await()
         if (!res.ok)
             return R(res.statusText+" "+res.text().await(),null)
         val res2 = res.text().await()
         val format = Json { ignoreUnknownKeys = true }
-        return R("",format.decodeFromString<JString>(res2))
-    }
-    suspend fun readESS2NodeSnapShotValues(SessionToken:String,nodeid:Long,deviceName:String) : R<IntegerList> {
-        val headers = Headers()
-        headers.append("SessionToken",SessionToken)
-        val res = window
-        .fetch("http://"+ip+":"+port+"/api/ess2/node/snapshot/list/read?nodeid="+nodeid+"&deviceName="+deviceName+"",RequestInit("post",headers))
-            .await()
-        if (!res.ok)
-            return R(res.statusText+" "+res.text().await(),null)
-        val res2 = res.text().await()
-        val format = Json { ignoreUnknownKeys = true }
-        return R("",format.decodeFromString<IntegerList>(res2))
-    }
-    suspend fun readRegisterValue(SessionToken:String,regnum:Int) : R<JInt> {
-        val headers = Headers()
-        headers.append("SessionToken",SessionToken)
-        val res = window
-        .fetch("http://"+ip+":"+port+"/api/ess/register/value/read?regnum="+regnum+"",RequestInit("get",headers))
-            .await()
-        if (!res.ok)
-            return R(res.statusText+" "+res.text().await(),null)
-        val res2 = res.text().await()
-        val format = Json { ignoreUnknownKeys = true }
-        return R("",format.decodeFromString<JInt>(res2))
-    }
-    suspend fun getNewStreamPeriod(SessionToken:String,lastid:Long) : R<EntityList<ArchStreamPeriod>> {
-        val headers = Headers()
-        headers.append("SessionToken",SessionToken)
-        val res = window
-        .fetch("http://"+ip+":"+port+"/api/ess/streamperiod/new/list?lastid="+lastid+"",RequestInit("get",headers))
-            .await()
-        if (!res.ok)
-            return R(res.statusText+" "+res.text().await(),null)
-        val res2 = res.text().await()
-        val format = Json { ignoreUnknownKeys = true }
-        return R("",format.decodeFromString<EntityList<ArchStreamPeriod>>(res2))
+        return R("",format.decodeFromString<JEmpty>(res2))
     }
 }
