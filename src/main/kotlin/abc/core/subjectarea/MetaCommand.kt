@@ -1,0 +1,17 @@
+package abc.core.subjectarea
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
+
+@Serializable
+class MetaCommand:Entity{
+    var MetaCommandRegister:EntityLink<MetaCommandRegister> = EntityLink<MetaCommandRegister>()
+    var regNum:Int=0
+    var code:Int=0
+    var stateMask:Int=0
+    var remoteEnable:Boolean=false
+    var shortName:String=""
+    var title:String=""
+    var comment:String=""
+    constructor() {}
+}

@@ -1,0 +1,17 @@
+package abc.core.subjectarea
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
+
+@Serializable
+class ESS2LogUnit:Entity{
+    var ESS2Equipment:EntityLink<ESS2Equipment> = EntityLink<ESS2Equipment>()
+    var device:EntityLink<ESS2Device> = EntityLink<ESS2Device>()
+    var unit:Int=0
+    var snapShotDisable:Boolean=false
+    var devName:String=""
+    var shortName:String=""
+    var title:String=""
+    var comment:String=""
+    constructor() {}
+}
