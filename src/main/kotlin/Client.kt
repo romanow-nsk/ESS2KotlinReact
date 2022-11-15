@@ -12,7 +12,7 @@ import org.w3c.fetch.RequestInit
 
 suspend fun keepAlive2(token:String): String {
     val response = window
-        .fetch("http://localhost:4567/api/keepalive", RequestInit("get", Headers().append("SessionToken",token)))
+        .fetch("http://localhost:4569/api/keepalive", RequestInit("get", Headers().append("SessionToken",token)))
         .await()
         .text()
         .await()
@@ -23,8 +23,8 @@ suspend fun main(args: Array<String>) {
     val container = document.createElement("div")
     document.body!!.appendChild(container)
     val api: RestAPIBase = RestAPIBase()
-    //api.ip="217.71.138.9"
-    //api.port=4567
+    api.ip="217.71.138.9"
+    api.port=4569
     val ss = api.keepalive("1111111")
     val userPair = api.login("9136666666","1234")
     var out = ""
