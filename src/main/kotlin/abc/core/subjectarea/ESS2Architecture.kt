@@ -5,12 +5,12 @@ import kotlinx.serialization.json.Json
 
 @Serializable
 class ESS2Architecture:Entity{
-    var views:EntityRefList<ESS2View> = EntityRefList<ESS2View>()
-    var equipments:EntityRefList<ESS2Equipment> = EntityRefList<ESS2Equipment>()
-    var devices:EntityRefList<ESS2Device> = EntityRefList<ESS2Device>()
-    var scripts:EntityRefList<ESS2ScriptFile> = EntityRefList<ESS2ScriptFile>()
-    var emulators:EntityRefList<ESS2EquipEmulator> = EntityRefList<ESS2EquipEmulator>()
-    var envValues:EntityRefList<ESS2EnvValue> = EntityRefList<ESS2EnvValue>()
+    var views:ArrayList<ESS2View> = ArrayList<ESS2View>()
+    var equipments:ArrayList<ESS2Equipment> = ArrayList<ESS2Equipment>()
+    var devices:ArrayList<ESS2Device> = ArrayList<ESS2Device>()
+    var scripts:ArrayList<ESS2ScriptFile> = ArrayList<ESS2ScriptFile>()
+    var emulators:ArrayList<ESS2EquipEmulator> = ArrayList<ESS2EquipEmulator>()
+    var envValues:ArrayList<ESS2EnvValue> = ArrayList<ESS2EnvValue>()
     var shortName:String=""
     var title:String=""
     var comment:String=""

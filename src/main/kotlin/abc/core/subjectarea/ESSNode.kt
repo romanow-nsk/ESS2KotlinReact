@@ -16,7 +16,7 @@ class ESSNode:Entity{
     var innerTestTime:OwnDateTime=OwnDateTime()
     var stateTestTime:OwnDateTime=OwnDateTime()
     var streamDataTime:OwnDateTime=OwnDateTime()
-    var streamRegisters:EntityRefList<MetaDataRegister> = EntityRefList<MetaDataRegister>()
+    var streamRegisters:ArrayList<MetaDataRegister> = ArrayList<MetaDataRegister>()
     var streamRegistersValid:Boolean=false
     var lastStreamDataId:Long=0
     var lastStreamPeriodId:Long=0

@@ -12,6 +12,8 @@ class ESS2Device:Entity{
     var timeOut:Int=0
     var regsInBlock:Int=0
     var unitsNum:Int=0
+    var RTU:Boolean=false
+    var baudRate:Int=0
     var shortName:String=""
     var title:String=""
     var comment:String=""

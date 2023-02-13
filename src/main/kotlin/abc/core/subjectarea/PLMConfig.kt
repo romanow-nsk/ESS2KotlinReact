@@ -8,7 +8,7 @@ class PLMConfig:Entity{
     var author:EntityLink<User> = EntityLink<User>()
     var createDate:OwnDateTime=OwnDateTime()
     var changeDate:OwnDateTime=OwnDateTime()
-    var registerValues:EntityRefList<PLMConfigValue> = EntityRefList<PLMConfigValue>()
+    var registerValues:ArrayList<PLMConfigValue> = ArrayList<PLMConfigValue>()
     var MetaExternalSystem:EntityLink<MetaExternalSystem> = EntityLink<MetaExternalSystem>()
     var shortName:String=""
     var title:String=""

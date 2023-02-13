@@ -24,6 +24,9 @@ class WorkSettings:Entity{
     var compressMode:Int=0
     var userSilenceTime:Int=0
     var mainServerPeriod:Int=0
+    var iec61850Port:Int=0
+    var priorityDispatcher:Boolean=false
+    var clockAcrossAPI:Boolean=false
     var MKVersion:String=""
     var dataServerFileDir:String=""
     var dataServerFileDirDefault:Boolean=false
@@ -36,5 +39,6 @@ class WorkSettings:Entity{
     var mailToSend:String=""
     var mailNotifycation:Boolean=false
     var nodeName:String=""
+    var traceLevel:Int=0
     constructor() {}
 }

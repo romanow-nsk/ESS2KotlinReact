@@ -5,7 +5,7 @@ import kotlinx.serialization.json.Json
 
 @Serializable
 class MetaBitRegister:Entity{
-    var bits:EntityRefList<MetaBit> = EntityRefList<MetaBit>()
+    var bits:ArrayList<MetaBit> = ArrayList<MetaBit>()
     var bitRegType:Int=0
     var homogen:Boolean=false
     var control:Boolean=false

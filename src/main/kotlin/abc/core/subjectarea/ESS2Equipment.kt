@@ -7,7 +7,7 @@ import kotlinx.serialization.json.Json
 class ESS2Equipment:Entity{
     var ESS2Architecture:EntityLink<ESS2Architecture> = EntityLink<ESS2Architecture>()
     var multiUnit:Boolean=false
-    var logUnits:EntityRefList<ESS2LogUnit> = EntityRefList<ESS2LogUnit>()
+    var logUnits:ArrayList<ESS2LogUnit> = ArrayList<ESS2LogUnit>()
     var metaFile:EntityLink<ESS2MetaFile> = EntityLink<ESS2MetaFile>()
     var shortName:String=""
     var title:String=""

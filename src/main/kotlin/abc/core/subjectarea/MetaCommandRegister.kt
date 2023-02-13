@@ -5,7 +5,7 @@ import kotlinx.serialization.json.Json
 
 @Serializable
 class MetaCommandRegister:Entity{
-    var commands:EntityRefList<MetaCommand> = EntityRefList<MetaCommand>()
+    var commands:ArrayList<MetaCommand> = ArrayList<MetaCommand>()
     var command:Boolean=false
     var count:Int=0
     var step:Int=0

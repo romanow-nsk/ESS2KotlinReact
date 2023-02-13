@@ -5,7 +5,7 @@ import kotlinx.serialization.json.Json
 
 @Serializable
 class ArchStreamPeriod:Entity{
-    var dataSets:EntityRefList<ArchStreamDataSet> = EntityRefList<ArchStreamDataSet>()
+    var dataSets:ArrayList<ArchStreamDataSet> = ArrayList<ArchStreamDataSet>()
     var startServerTime:OwnDateTime=OwnDateTime()
     var shutDownServerTime:OwnDateTime=OwnDateTime()
     var firstStreamTime:OwnDateTime=OwnDateTime()

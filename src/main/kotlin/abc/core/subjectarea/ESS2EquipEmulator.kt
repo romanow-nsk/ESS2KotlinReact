@@ -10,6 +10,9 @@ class ESS2EquipEmulator:Entity{
     var trace:Boolean=false
     var port:Int=0
     var className:String=""
+    var lineName:String=""
+    var RTU:Boolean=false
+    var baudRate:Int=0
     var shortName:String=""
     var title:String=""
     var comment:String=""
