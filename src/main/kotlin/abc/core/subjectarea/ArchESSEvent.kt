@@ -4,7 +4,9 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 @Serializable
-class ArchESSEvent:Entity{
+class ArchESSEvent{
+    var oid:Long=0
+    var valid:Boolean=false
     var type:Int=0
     var level:Int=0
     var title:String=""

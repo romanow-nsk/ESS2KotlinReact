@@ -4,7 +4,9 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 @Serializable
-class MetaDataRegister:Entity{
+class MetaDataRegister{
+    var oid:Long=0
+    var valid:Boolean=false
     var ESSNode:EntityLink<ESSNode> = EntityLink<ESSNode>()
     var stateMask:Int=0
     var unit:String=""

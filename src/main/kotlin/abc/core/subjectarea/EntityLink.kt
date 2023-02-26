@@ -4,7 +4,7 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 @Serializable
-class EntityLink<T : Entity?> {
+class EntityLink<T> {
     var oid: Long = 0L
     var ref: T? = null
 }

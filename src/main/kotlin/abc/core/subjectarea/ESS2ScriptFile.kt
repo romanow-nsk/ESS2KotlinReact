@@ -4,7 +4,9 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 @Serializable
-class ESS2ScriptFile:Entity{
+class ESS2ScriptFile{
+    var oid:Long=0
+    var valid:Boolean=false
     var file:EntityLink<Artifact> = EntityLink<Artifact>()
     var ESS2Architecture:EntityLink<ESS2Architecture> = EntityLink<ESS2Architecture>()
     var scriptType:Int=0

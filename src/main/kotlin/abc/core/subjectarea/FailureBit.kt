@@ -4,7 +4,9 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 @Serializable
-class FailureBit:Entity{
+class FailureBit{
+    var oid:Long=0
+    var valid:Boolean=false
     var warning:Boolean=false
     var quited:Boolean=false
     var done:Boolean=false

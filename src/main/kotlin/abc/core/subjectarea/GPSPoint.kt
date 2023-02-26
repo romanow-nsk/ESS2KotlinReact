@@ -4,7 +4,9 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 @Serializable
-class GPSPoint:Entity{
+class GPSPoint{
+    var oid:Long=0
+    var valid:Boolean=false
     var state:Int=0
     var geoy:Double=0.0
     var geox:Double=0.0

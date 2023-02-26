@@ -4,7 +4,9 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 @Serializable
-class ESS2View:Entity{
+class ESS2View{
+    var oid:Long=0
+    var valid:Boolean=false
     var ESS2Architecture:EntityLink<ESS2Architecture> = EntityLink<ESS2Architecture>()
     var metaFile:EntityLink<ESS2MetaFile> = EntityLink<ESS2MetaFile>()
     var shortName:String=""

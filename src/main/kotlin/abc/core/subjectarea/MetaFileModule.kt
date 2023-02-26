@@ -4,7 +4,9 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 @Serializable
-class MetaFileModule:Entity{
+class MetaFileModule{
+    var oid:Long=0
+    var valid:Boolean=false
     var module:String=""
     var path:String=""
     var MetaExternalSystem:EntityLink<MetaExternalSystem> = EntityLink<MetaExternalSystem>()

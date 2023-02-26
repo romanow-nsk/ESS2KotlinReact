@@ -4,7 +4,9 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 @Serializable
-class MetaCommand:Entity{
+class MetaCommand{
+    var oid:Long=0
+    var valid:Boolean=false
     var MetaCommandRegister:EntityLink<MetaCommandRegister> = EntityLink<MetaCommandRegister>()
     var regNum:Int=0
     var code:Int=0

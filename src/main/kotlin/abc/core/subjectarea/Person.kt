@@ -4,7 +4,9 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 @Serializable
-class Person:Entity{
+class Person{
+    var oid:Long=0
+    var valid:Boolean=false
     var lastName:String=""
     var firstName:String=""
     var middleName:String=""

@@ -4,7 +4,9 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 @Serializable
-class ESSNode:Entity{
+class ESSNode{
+    var oid:Long=0
+    var valid:Boolean=false
     var hostName:String=""
     var serverIP:String=""
     var serverPort:Int=0

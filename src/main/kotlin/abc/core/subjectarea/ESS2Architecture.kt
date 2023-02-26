@@ -4,7 +4,9 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 @Serializable
-class ESS2Architecture:Entity{
+class ESS2Architecture{
+    var oid:Long=0
+    var valid:Boolean=false
     var views:ArrayList<ESS2View> = ArrayList<ESS2View>()
     var equipments:ArrayList<ESS2Equipment> = ArrayList<ESS2Equipment>()
     var devices:ArrayList<ESS2Device> = ArrayList<ESS2Device>()

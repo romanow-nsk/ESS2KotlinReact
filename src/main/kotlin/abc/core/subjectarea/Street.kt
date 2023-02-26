@@ -4,7 +4,9 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 @Serializable
-class Street:Entity{
+class Street{
+    var oid:Long=0
+    var valid:Boolean=false
     var name:String=""
     var type:Int=0
     var city:EntityLink<City> = EntityLink<City>()

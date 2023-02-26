@@ -4,7 +4,9 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 @Serializable
-class ESS2EquipEmulator:Entity{
+class ESS2EquipEmulator{
+    var oid:Long=0
+    var valid:Boolean=false
     var ESS2Architecture:EntityLink<ESS2Architecture> = EntityLink<ESS2Architecture>()
     var enable:Boolean=false
     var trace:Boolean=false

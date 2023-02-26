@@ -4,7 +4,9 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 @Serializable
-class User:Entity{
+class User{
+    var oid:Long=0
+    var valid:Boolean=false
     var typeId:Int=0
     var accountData:EntityLink<Account> = EntityLink<Account>()
     var photo:EntityLink<Artifact> = EntityLink<Artifact>()

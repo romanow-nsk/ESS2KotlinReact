@@ -4,7 +4,9 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 @Serializable
-class ESS2Node:Entity{
+class ESS2Node{
+    var oid:Long=0
+    var valid:Boolean=false
     var architecture:EntityLink<ESS2Architecture> = EntityLink<ESS2Architecture>()
     var ESSServerIP:String=""
     var ESSServerPort:Int=0

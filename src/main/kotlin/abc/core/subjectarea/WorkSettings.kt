@@ -4,8 +4,11 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 @Serializable
-class WorkSettings:Entity{
+class WorkSettings{
+    var oid:Long=0
+    var valid:Boolean=false
     var archiveDepthInDay:Int=0
+    var archiveLastDay:Int=0
     var streamDataPeriod:Int=0
     var streamDataLongPeriod:Int=0
     var failureTestPeriod:Int=0

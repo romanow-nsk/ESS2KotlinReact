@@ -4,7 +4,9 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 @Serializable
-class NTMessage:Entity{
+class NTMessage{
+    var oid:Long=0
+    var valid:Boolean=false
     var user:EntityLink<User> = EntityLink<User>()
     var artifact:EntityLink<Artifact> = EntityLink<Artifact>()
     var message:String=""

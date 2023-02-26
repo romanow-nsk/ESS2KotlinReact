@@ -4,7 +4,9 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 @Serializable
-class MetaSettingRegister:Entity{
+class MetaSettingRegister{
+    var oid:Long=0
+    var valid:Boolean=false
     var defValueFormula:String=""
     var minValueFormula:String=""
     var maxValueFormula:String=""

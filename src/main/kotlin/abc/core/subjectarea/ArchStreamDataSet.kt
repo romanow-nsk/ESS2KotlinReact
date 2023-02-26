@@ -4,7 +4,9 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 @Serializable
-class ArchStreamDataSet:Entity{
+class ArchStreamDataSet{
+    var oid:Long=0
+    var valid:Boolean=false
     var nodeOid:Long=0
     var createTime:OwnDateTime=OwnDateTime()
     var streamDataType:Int=0

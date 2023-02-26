@@ -1,2 +1,2 @@
 package abc.core.subjectarea
-open class EntityList<T : Entity?> : ArrayList<T>() { }
+open class EntityList<T> : ArrayList<T>() { }

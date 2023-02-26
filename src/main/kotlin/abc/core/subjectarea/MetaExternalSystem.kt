@@ -4,7 +4,9 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 @Serializable
-class MetaExternalSystem:Entity{
+class MetaExternalSystem{
+    var oid:Long=0
+    var valid:Boolean=false
     var versionRegNum:Int=0
     var versionRegValue:Int=0
     var subSystems:ArrayList<MetaSubSystem> = ArrayList<MetaSubSystem>()

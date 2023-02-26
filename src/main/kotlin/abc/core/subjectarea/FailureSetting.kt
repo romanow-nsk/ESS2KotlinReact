@@ -4,7 +4,9 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 @Serializable
-class FailureSetting:Entity{
+class FailureSetting{
+    var oid:Long=0
+    var valid:Boolean=false
     var overLimit:Boolean=false
     var warning:Boolean=false
     var quited:Boolean=false

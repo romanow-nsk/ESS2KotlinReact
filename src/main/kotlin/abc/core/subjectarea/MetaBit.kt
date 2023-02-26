@@ -4,7 +4,9 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 @Serializable
-class MetaBit:Entity{
+class MetaBit{
+    var oid:Long=0
+    var valid:Boolean=false
     var MetaBitRegister:EntityLink<MetaBitRegister> = EntityLink<MetaBitRegister>()
     var bitNum:Int=0
     var control:Boolean=false

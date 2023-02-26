@@ -33,7 +33,6 @@ suspend fun main(args: Array<String>) {
     if (!userPair.valid())
         out = userPair.mes
     else {
-        var out = ""
         if (!userPair.valid())
             out = userPair.mes
         else {
@@ -42,34 +41,33 @@ suspend fun main(args: Array<String>) {
             var list = api.getEntityList(token,"User",0,0)
             for (vv in list.data!!){
                 var user2 = format.decodeFromString<User>(vv.jsonObject)
-                out += user2.lastName+"_"+user2.firstName+" "
+                out += user2.lastName+"_"+user2.firstName+"["+user2.oid+"]..."
                 }
             var list2 = api.getEntityList(token,"ESS2Architecture",0,0)
-            var arch : ESS2Architecture = ESS2Architecture()
+            var archList : ArrayList<ESS2Architecture> = ArrayList()
             for (vv in list2.data!!){
-                arch = format.decodeFromString<ESS2Architecture>(vv.jsonObject)
-                out += "ArchId="+arch.oid+"\n"
+                var arch = format.decodeFromString<ESS2Architecture>(vv.jsonObject)
+                out += "Архитектура="+arch.title+"["+arch.oid+"]..."
+                archList.add(arch)
                 }
-            //var dd = api.getEntity(token,"ESS2Architecture",arch.oid,4)
+            var dd = api.getEntity(token,"ESS2Architecture",archList.get(0).oid,4)
             //out+=dd.data!!.jsonObject+"\n"
-            //var archFull = format.decodeFromString<ESS2Architecture>(dd.data!!.jsonObject)
-            /*
+            var archFull = format.decodeFromString<ESS2Architecture>(dd.data!!.jsonObject)
             for (vv in archFull.equipments){
                 out+= "1. "+vv.title+"\n"
                 }
             for (vv in archFull.devices){
-                out+= "2. "+vv.toString()+"\n"
+                out+= "2. "+vv.title+"\n"
                 }
             for (vv in archFull.emulators){
-                out+= "3. "+vv.toString()+"\n"
+                out+= "3. "+vv.title+"\n"
                 }
             for (vv in archFull.envValues){
-                out+= "4. "+vv.toString()+"\n"
+                out+= "4. "+vv.title+"\n"
                 }
             for (vv in archFull.views){
-                out+= "5. "+vv.toString()+"\n"
+                out+= "5. "+vv.title+"\n"
                 }
-             */
             }
 
         //val list = api.getEntityList(token,"User",0,0)
@@ -80,7 +78,7 @@ suspend fun main(args: Array<String>) {
         //    }
         }
     val welcome = Welcome.create {
-        name = api.ip+" "+token+" "+out
+        name = api.ip+" "+out
 
     }
     createRoot(container).render(welcome)

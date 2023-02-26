@@ -4,7 +4,9 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 @Serializable
-class WorkSettingsBase:Entity{
+class WorkSettingsBase{
+    var oid:Long=0
+    var valid:Boolean=false
     var MKVersion:String=""
     var dataServerFileDir:String=""
     var dataServerFileDirDefault:Boolean=false

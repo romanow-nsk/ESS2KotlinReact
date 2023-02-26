@@ -4,7 +4,9 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 @Serializable
-class ESS2LogUnit:Entity{
+class ESS2LogUnit{
+    var oid:Long=0
+    var valid:Boolean=false
     var ESS2Equipment:EntityLink<ESS2Equipment> = EntityLink<ESS2Equipment>()
     var device:EntityLink<ESS2Device> = EntityLink<ESS2Device>()
     var unit:Int=0

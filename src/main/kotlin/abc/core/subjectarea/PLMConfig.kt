@@ -4,7 +4,9 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 @Serializable
-class PLMConfig:Entity{
+class PLMConfig{
+    var oid:Long=0
+    var valid:Boolean=false
     var author:EntityLink<User> = EntityLink<User>()
     var createDate:OwnDateTime=OwnDateTime()
     var changeDate:OwnDateTime=OwnDateTime()

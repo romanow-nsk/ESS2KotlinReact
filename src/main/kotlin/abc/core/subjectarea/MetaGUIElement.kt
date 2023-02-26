@@ -4,7 +4,9 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 @Serializable
-class MetaGUIElement:Entity{
+class MetaGUIElement{
+    var oid:Long=0
+    var valid:Boolean=false
     var MetaGUIForm:EntityLink<MetaGUIForm> = EntityLink<MetaGUIForm>()
     var type:Int=0
     var x:Int=0
