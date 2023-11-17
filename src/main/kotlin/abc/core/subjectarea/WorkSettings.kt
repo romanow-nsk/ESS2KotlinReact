@@ -2,6 +2,8 @@ package abc.core.subjectarea
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+import abc.core.subjectarea.Artifact
+import abc.core.subjectarea.EntityLink
 
 @Serializable
 class WorkSettings{
@@ -28,8 +30,18 @@ class WorkSettings{
     var userSilenceTime:Int=0
     var mainServerPeriod:Int=0
     var iec61850Port:Int=0
+    var iec60870Port:Int=0
+    var iec60870ASDUAddress:Int=0
     var priorityDispatcher:Boolean=false
     var clockAcrossAPI:Boolean=false
+    var profilerOn:Boolean=false
+    var profilerTrace:Boolean=false
+    var profilerBundle:Boolean=false
+    var profilerPort:Int=0
+    var profilerScale:Int=0
+    var profilerPath:String=""
+    var interruptRegisterOn:Boolean=false
+    var eventsQueuePeriod:Int=0
     var MKVersion:String=""
     var dataServerFileDir:String=""
     var dataServerFileDirDefault:Boolean=false

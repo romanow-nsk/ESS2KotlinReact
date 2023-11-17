@@ -8,7 +8,8 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
-}
+    }
+
 
 dependencies {
     testImplementation(kotlin("test"))
@@ -20,6 +21,7 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.3.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("org.webjars.npm:xml2js:0.4.23")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.14.2")
 }
 
 kotlin {

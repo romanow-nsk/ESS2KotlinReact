@@ -2,6 +2,8 @@ package abc.core.subjectarea
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+import abc.core.subjectarea.Artifact
+import abc.core.subjectarea.EntityLink
 
 @Serializable
 class ESS2EquipEmulator{
@@ -15,6 +17,8 @@ class ESS2EquipEmulator{
     var lineName:String=""
     var RTU:Boolean=false
     var baudRate:Int=0
+    var metaFile:EntityLink<ESS2MetaFile> = EntityLink<ESS2MetaFile>()
+    var authCode:String=""
     var shortName:String=""
     var title:String=""
     var comment:String=""

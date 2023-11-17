@@ -1,20 +1,21 @@
+
 import abc.core.subjectarea.*
-import abc.core.subjectarea.equipment.XML2
+import abc.core.subjectarea.equipment.Meta2XML
 import kotlinx.browser.document
 import kotlinx.browser.window
 import kotlinx.coroutines.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import org.w3c.dom.parsing.XMLSerializer
 import org.w3c.fetch.Headers
 import org.w3c.fetch.RequestInit
 import react.create
 import react.dom.client.createRoot
 
 
+
 suspend fun keepAlive2(token:String): String {
     val response = window
-        .fetch("http://localhost:4569/api/keepalive", RequestInit("get", Headers().append("SessionToken",token)))
+        .fetch("http://localhost:4567/api/keepalive", RequestInit("get", Headers().append("SessionToken",token)))
         .await()
         .text()
         .await()
@@ -34,16 +35,14 @@ fun finalOut(out : String){
     createRoot(container).render(welcome)
     }
 //-------------------------------------------------------------------------------------------------------------------
-suspend fun loadXMLArtifact(art : Artifact) : XML2 {
+suspend fun loadXMLArtifact(art : Artifact) : Meta2XML {
     val body = api.downLoad(token,art.oid)
     if (!body.valid())
         finalOut("Ошибка: "+body.mes)
     else{
         finalOut("Тело: "+body.data)
         }
-
-
-    return XML2()
+    return Meta2XML()
     }
     /*
     val fileSize: Long = body.data!!.contentLength()
@@ -61,14 +60,22 @@ suspend fun loadXMLArtifact(art : Artifact) : XML2 {
         }
     })
     */
+// поправить - двойной шаблон
+// RestAPIESS2
+// suspend fun getStreamData2(SessionToken:String,mode:Int,logNum:Int,timeInMS1:Long,timeInMS2:Long) : R<Pair<ErrorList,ArrayList<StreamDataValue>>> {
+// RestAPIBase
+// suspend fun getConsoleLogPolling(SessionToken:String,lastnum:Long) : R<Pair<Long,StringList>> {
+// api2.ip="http://10.200.200.72"
+// api2.port=4567
+//
 suspend fun main(args: Array<String>) {
     api.ip="localhost"
-    api.port=4569
+    api.port=4567
     api2.ip="localhost"
-    api2.port=4569
+    api2.port=4567
     val ss = api.keepalive("1111111")
     //------------------------- Авторизация под сисадмином ------------------------
-    val userPair = api.login("9130000000","pi31415926")
+    val userPair = api.login("9131111111","1234")
     var out = ""
     if (!userPair.valid()){
         finalOut("Ошибка: "+userPair.mes)

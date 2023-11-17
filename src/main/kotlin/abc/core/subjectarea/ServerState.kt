@@ -2,15 +2,14 @@ package abc.core.subjectarea
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+import abc.core.subjectarea.Artifact
+import abc.core.subjectarea.EntityLink
 
 @Serializable
 class ServerState{
     var oid:Long=0
     var valid:Boolean=false
     var serverRun:Boolean=false
-    var lastMailNumber:Int=0
-    var asteriskMailOn:Boolean=false
-    var asrteiskDialOn:Boolean=false
     var locked:Boolean=false
     var requestNum:Int=0
     var sessionCount:Int=0

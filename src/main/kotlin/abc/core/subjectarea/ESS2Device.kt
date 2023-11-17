@@ -2,6 +2,8 @@ package abc.core.subjectarea
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+import abc.core.subjectarea.Artifact
+import abc.core.subjectarea.EntityLink
 
 @Serializable
 class ESS2Device{
@@ -16,6 +18,9 @@ class ESS2Device{
     var unitsNum:Int=0
     var RTU:Boolean=false
     var baudRate:Int=0
+    var trace:Boolean=false
+    var uniqueModule:Boolean=false
+    var uniqueModuleClass:String=""
     var shortName:String=""
     var title:String=""
     var comment:String=""
