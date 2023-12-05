@@ -9,7 +9,6 @@ import abc.core.subjectarea.EntityLink
 class ArchStreamPeriod{
     var oid:Long=0
     var valid:Boolean=false
-    var dataSets:ArrayList<ArchStreamDataSet> = ArrayList<ArchStreamDataSet>()
     var startServerTime:OwnDateTime=OwnDateTime()
     var shutDownServerTime:OwnDateTime=OwnDateTime()
     var firstStreamTime:OwnDateTime=OwnDateTime()
@@ -20,5 +19,6 @@ class ArchStreamPeriod{
     var setCount:Int=0
     var sourceByteSize:Int=0
     var packedByteSize:Int=0
+    var packedValuesSize:Int=0
     constructor() {}
 }

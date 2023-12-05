@@ -13,9 +13,9 @@ class ArchStreamDataSet{
     var createTime:OwnDateTime=OwnDateTime()
     var streamDataType:Int=0
     var ready:Boolean=false
-    var packedValues:String=""
     var size:Int=0
     var compressMode:Int=0
     var sendToHost:Boolean=false
+    var packedValues:String=""
     constructor() {}
 }

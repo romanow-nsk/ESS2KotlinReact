@@ -15,7 +15,7 @@ import react.dom.client.createRoot
 
 suspend fun keepAlive2(token:String): String {
     val response = window
-        .fetch("http://localhost:4567/api/keepalive", RequestInit("get", Headers().append("SessionToken",token)))
+        .fetch("http://10.200.200.70:4567/api/keepalive", RequestInit("get", Headers().append("SessionToken",token)))
         .await()
         .text()
         .await()
@@ -69,9 +69,9 @@ suspend fun loadXMLArtifact(art : Artifact) : Meta2XML {
 // api2.port=4567
 //
 suspend fun main(args: Array<String>) {
-    api.ip="localhost"
+    api.ip="10.200.200.70"
     api.port=4567
-    api2.ip="localhost"
+    api2.ip="10.200.200.70"
     api2.port=4567
     val ss = api.keepalive("1111111")
     //------------------------- Авторизация под сисадмином ------------------------

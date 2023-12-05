@@ -16,6 +16,7 @@ class ESS2Architecture{
     var emulators:ArrayList<ESS2EquipEmulator> = ArrayList<ESS2EquipEmulator>()
     var profilers:ArrayList<ESS2ProfilerModule> = ArrayList<ESS2ProfilerModule>()
     var envValues:ArrayList<ESS2EnvValue> = ArrayList<ESS2EnvValue>()
+    var gates:ArrayList<ESS2ModBusGate> = ArrayList<ESS2ModBusGate>()
     var shortName:String=""
     var title:String=""
     var comment:String=""

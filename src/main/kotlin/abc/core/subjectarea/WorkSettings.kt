@@ -42,6 +42,8 @@ class WorkSettings{
     var profilerPath:String=""
     var interruptRegisterOn:Boolean=false
     var eventsQueuePeriod:Int=0
+    var modellingSpeed:Int=0
+    var streamFileSets:Int=0
     var MKVersion:String=""
     var dataServerFileDir:String=""
     var dataServerFileDirDefault:Boolean=false
